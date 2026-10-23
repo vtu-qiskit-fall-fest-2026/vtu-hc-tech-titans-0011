@@ -1,312 +1,164 @@
-<div align="center">
+# QuantumGreen – AI-Powered Smart Energy Optimization for a Sustainable Future
 
-# Tech Titans
+[![Hackathon Domain: Quantum Applications for Climate Change & Sustainability](https://img.shields.io/badge/Domain-Quantum_Applications_for_Climate_Change-10B981.svg)](#)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3B82F6.svg)](#)
+[![Framework: Flask](https://img.shields.io/badge/Framework-Flask_3.1-06B6D4.svg)](#)
+[![Quantum: Qiskit 2.6](https://img.shields.io/badge/Quantum-Qiskit_2.6-8B5CF6.svg)](#)
+[![AI/ML: Scikit--Learn](https://img.shields.io/badge/ML-Scikit--Learn_1.9-F59E0B.svg)](#)
 
-**VTU-QFF-HC-0011** &nbsp;|&nbsp; Tier: **Online**
+> **Tagline:** *“Smarter Energy, Greener Tomorrow.”*
 
-</div>
-
----
-
-<div align="center">
-
-| | |
-| :--- | :--- |
-| **Team** | Tech Titans |
-| **Team ID** | VTU-QFF-HC-0011 |
-| **Tier** | Online |
-| **Repository** | [vtu-hc-tech-titans-0011](https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-tech-titans-0011.git) |
-| **Organisation** | [vtu-qiskit-fall-fest-2026](https://github.com/vtu-qiskit-fall-fest-2026) |
-| **Event** | VTU-QFF Hackathon — VTU-Qiskit Fall Fest 2026 |
-
-</div>
+**QuantumGreen** is a modern, responsive, and end-to-end interactive energy optimization platform designed for colleges, hostels, research laboratories, and public office complexes. It monitors electricity consumption, predicts future energy demand using machine learning, recommends actionable energy-saving measures, estimates carbon footprints, optimizes equipment operating schedules using classical algorithms, and demonstrates how quantum optimization (QAOA with Qiskit) can tackle future grid combinatorial dispatch.
 
 ---
 
-## 📌 Table of Contents
+## 🌟 Key Features & Website Modules
 
-- [Team Members](#-team-members-github-ids)
-- [Problem Statement](#-problem-statement)
-- [Proposed Solution](#-proposed-solution)
-- [Approach & Architecture](#-approach--architecture)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [How to Run](#-how-to-run)
-- [How to Push Code](#-how-to-push-code)
-- [Submission Checklist](#-submission-checklist)
-- [Resources](#-resources)
-- [License](#-license)
+### 1. Home Portal
+- Interactive welcoming dashboard with quick CTAs: **Explore Dashboard**, **Analyze Energy**, **Run AI Prediction**, and **Learn About Quantum**.
+- Pre-loaded with **4 verified facility presets**:
+  1. *Greenwood Engineering College* (Academic blocks, computer labs, libraries, CNC workshops, borewell pumps).
+  2. *TechHub Student Hostels & Mess* (Water geysers, laundromat machines, induction kitchen, corridor lighting).
+  3. *BioSci Advanced Research Labs* (Cleanroom HVAC, ultra-low -80°C freezers, autoclaves, centrifuges).
+  4. *Metro Central Public Office Complex* (Central chiller plants, high-rise elevator banks, server UPS).
 
----
+### 2. Energy Dashboard
+- Total electricity consumption (kWh) across peak and off-peak hours.
+- Time-of-Use (ToU) electricity cost accounting.
+- Scope 2 carbon emissions estimation (kg CO₂e) with configurable grid emission factors.
+- **Environmental Impact Equivalencies**: Mature trees needed for 1-year sequestration, passenger vehicle kilometers avoided, and smartphone charges equivalent.
+- Interactive Chart.js visualizations:
+  - 24-hour diurnal consumption curve (Baseline vs Potential Optimized).
+  - 30-day historical consumption trend.
+  - Equipment category energy share donut chart.
 
-## 👥 Team Members (GitHub IDs)
+### 3. Energy Data Input & Setup
+- Facility profile configuration: Base tariff, Peak tariff, Peak time window (e.g., 18:00 - 22:00), Emission factor slider with international grid presets (India 0.82, Global 0.48, US 0.39, Renewables 0.18).
+- **Interactive Equipment Inventory Manager**: Add, edit, review, and delete appliances with power ratings (Watts), operating hours, priority levels (Critical, Medium, Flexible), and preferred run windows.
+- **CSV Smart Meter Log Ingestion**: Upload custom hourly energy data with schema validation and sample CSV template downloads.
+- Stored persistently in a local SQLite database (`quantumgreen.db`).
 
-> Members are added to this repository as **collaborators** and must accept the
-> GitHub invitation before they can push. Add your GitHub username below.
+### 4. AI-Based Energy Prediction
+- Real **Scikit-Learn Machine Learning Pipeline** (Random Forest Regressor with 100 estimators).
+- Engineered features: Cyclical hour sine/cosine, cyclical day-of-week, temperature proxy, autoregressive lag features (lag-1, lag-24), and rolling 24-hour moving averages.
+- Evaluates real metrics: $R^2$ Score (>0.95), Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), and Forecast Accuracy %.
+- Visualizes:
+  - Hold-out test set **Actual vs Predicted** validation curve.
+  - Next 24-hour forward demand forecast with shaded **90% confidence bands**.
+  - 7-day daily forecast table with automatic **Peak Demand Risk Alerts**.
 
-| # | Name | GitHub Username | Role |
-| :-- | :--- | :--- | :--- |
-| 1 | _Add your name_ | _your-github-username_ | _Team Lead_ |
-| 2 | _Add your name_ | _your-github-username_ | _Developer_ |
-| 3 | _Add your name_ | _your-github-username_ | _Developer_ |
+### 5. Smart Energy Recommendations
+- Heuristic and tariff-driven recommendation engine:
+  - Shifting flexible high-draw appliances to off-peak valley hours.
+  - Intelligent HVAC thermostat setpoint optimization (21°C to 24°C).
+  - Automated smart contactor cutoff for phantom/standby loads (23:00 - 06:00).
+  - Microwave occupancy sensor retrofits for transit corridors and restrooms.
+  - Rooftop solar generation self-consumption alignment.
+- Each recommendation quantifies: Monthly financial savings, kWh saved, CO₂ reduction, priority badge, and explicit mathematical assumptions.
 
-<!--
-Optional: add a plain list instead of the table above.
-- @username1
-- @username2
--->
+### 6. Smart Energy Optimization (Classical Scheduler)
+- Formulates a 24-hour constrained load-shifting and peak-shaving problem.
+- Prioritizes critical appliances while moving flexible high-power loads to low-cost hours without exceeding grid transformer peak limits.
+- Outputs:
+  - Peak demand shaved ($kW$ and % shaved).
+  - Electricity cost and carbon emissions before vs after optimization.
+  - 24-hour stacked power load curve comparison.
+  - Appliance-by-appliance schedule breakdown with `SHIFTED` status tags.
 
----
+### 7. Quantum Optimization Lab (Qiskit QAOA)
+- Real **Qiskit 2.6 Quantum Simulation** demonstrating quantum optimization on energy scheduling.
+- **Mathematical Mapping**: Translates combinatorial load dispatch into a Quadratic Unconstrained Binary Optimization (QUBO) / Ising Spin Glass Hamiltonian:
+  $$\hat{H}_C = \sum_i h_i \hat{Z}_i + \sum_{i < j} J_{ij} \hat{Z}_i \hat{Z}_j$$
+- Compiles a parameterized **Quantum Approximate Optimization Algorithm (QAOA)** circuit with Cost and Mixer unitaries ($p=1$ or $p=2$ layers).
+- Uses classical COBYLA variational optimization over statevectors to maximize measurement probability for the optimal ground state.
+- **Benchmark Comparison**: Compares the Quantum solution side-by-side with Classical Exact Exhaustive Search and Classical Greedy heuristics (Energy cost, runtime in ms, optimality gap).
+- **Educational Commentary**: Explains the difference between a classical statevector simulator and physical NISQ quantum hardware (decoherence, gate infidelity, error mitigation).
 
-## ❓ Problem Statement
+### 8. Results & Official Reports
+- Executive summary with key performance indicators.
+- **One-Click CSV Export**: Complete hourly schedule and appliance allocation.
+- **One-Click PDF Report Generation**: Professional PDF audit generated on-the-fly using Python's `reportlab` library.
 
-<!--
-State the problem you are solving. Be specific: what is broken or missing,
-who experiences it, and why does it matter. Link to the official problem
-statement from the brief if one applies.
--->
-
-**Problem:** _Describe the problem in 2–3 sentences._
-
-**Why it matters:** _Explain the impact or opportunity._
-
-**Track / Category:** _Online / Offline · Track 1 / Track 2 · <domain>_
-
----
-
-## 💡 Proposed Solution
-
-<!--
-Describe your solution. Keep it concrete: the core idea, the user flow, and
-the quantum/ML technique you are applying.
--->
-
-**Solution:** _In 2–3 sentences, describe what you built._
-
-**Key idea:** _The one-line technical summary of your approach._
-
-**Why this works:** _How your approach addresses the problem statement._
-
----
-
-## 🧩 Approach & Architecture
-
-<!--
-Walk through how it works. A simple pipeline diagram in text or Mermaid is ideal.
--->
-
-```mermaid
-flowchart LR
-    A[Input Data] --> B[Preprocessing]
-    B --> C[Quantum Circuit / Model]
-    C --> D[Post-processing]
-    D --> E[Output]
-```
-
-1. **Input** — _what data goes in and in what format_
-2. **Preprocessing** — _cleaning, feature extraction, encoding_
-3. **Quantum core** — _the circuit, ansatz, or algorithm used_
-4. **Post-processing** — _decoding, measurement, scoring_
-5. **Output** — _what the user finally gets_
+### 9. Educational Section ("About Quantum Sustainability")
+- Explains quantum principles (superposition, entanglement, qubits vs classical bits) in accessible language.
+- AI/ML vs Quantum Optimization comparison matrix.
+- Interactive FAQ addressing peaker plants, climate impact, and quantum advantage.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Technology Stack
 
-| Layer | Technology |
-| :--- | :--- |
-| Language | Python 3.11+ |
-| Quantum SDK | Qiskit `>=1.0`, Qiskit Aer, Qiskit Runtime |
-| Optimisation | Qiskit Optimization / COBYLA / SPSA |
-| Simulation | AerSimulator (statevector / noisemodel) |
-| Environment | JupyterLab / VS Code, `venv` |
-| Version control | Git + GitHub |
-
----
-
-## 📁 Project Structure
-
-```text
-vtu-hc-tech-titans-0011/
-├── README.md              # This file
-├── requirements.txt       # Python dependencies
-├── pyproject.toml         # Project metadata (optional)
-├── .gitignore
-├── notebooks/             # Jupyter notebooks for experiments
-│   └── exploration.ipynb
-├── src/
-│   ├── __init__.py
-│   ├── circuit.py         # Quantum circuit construction
-│   ├── optimizer.py       # Optimization loop
-│   └── main.py            # Entry point
-├── data/                  # Datasets (use Git LFS for large files)
-├── tests/                 # Unit tests
-│   └── test_circuit.py
-└── docs/                  # Notes, diagrams, reports
-```
+| Layer | Technologies |
+|---|---|
+| **Backend** | Python 3.10+, Flask 3.1, SQLite3 |
+| **Machine Learning** | Scikit-Learn (Random Forest Regressor), NumPy, Pandas |
+| **Classical Optimization** | SciPy, Constrained Greedy Load-Shifter |
+| **Quantum Simulation** | Qiskit 2.6 (`qiskit.circuit.library.QAOAAnsatz`, `SparsePauliOp`, `Statevector`) |
+| **Report Generation** | ReportLab 5.1 (PDF Generation), Python CSV engine |
+| **Frontend UI** | HTML5, Modern CSS (Glassmorphism, Dark Blue & Emerald Green theme), Bootstrap 5.3, Bootstrap Icons |
+| **Data Visualization** | Chart.js 4.4, Canvas Confetti |
 
 ---
 
-## 🚀 How to Run
+## 🚀 Quick Setup & Running Locally
 
-### Prerequisites
+### 1. Prerequisites
+Ensure Python 3.10 or higher is installed on your system.
 
-- Python 3.11 or newer
-- [Git](https://git-scm.com/downloads)
-- A GitHub account (you need collaborator access to this repo)
-
-### 1. Clone the repository
-
+### 2. Install Dependencies
+Clone or open the project folder in your terminal and run:
 ```bash
-git clone https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-tech-titans-0011.git
-cd vtu-hc-tech-titans-0011
-```
-
-### 2. Create a virtual environment
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate        # Linux / macOS
-# .venv\Scripts\activate         # Windows (PowerShell)
-```
-
-### 3. Install dependencies
-
-```bash
-pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 4. Run
-
+### 3. Run the QuantumGreen Server
 ```bash
-python -m src.main
+python app.py
 ```
 
-Or launch the notebook workflow:
-
-```bash
-jupyter lab
+### 4. Open in Your Browser
+Visit:
 ```
-
-### 5. Run the tests
-
-```bash
-pytest -q
+http://127.0.0.1:5000
 ```
+The application will automatically initialize the SQLite database with realistic sample datasets so you can immediately explore and demonstrate all features.
 
 ---
 
-## 🔁 How to Push Code
+## 📡 REST API Endpoints
 
-> Full walkthrough: **[Git & Collaboration Handbook](../vtu-hc-guide-git-and-collaboration)** — collaboration
-> workflow, branches, pull requests, reviews and conflict resolution.
-
-### Configure Git (first time only)
-
-```bash
-git config --global user.name  "Your Name"
-git config --global user.email "you@example.com"
-```
-
-### Everyday workflow
-
-```bash
-# 1. Get the latest changes
-git checkout main
-git pull origin main
-
-# 2. Create a branch for your work
-git checkout -b feature/my-task
-
-# 3. Commit your work
-git add .
-git commit -m "feat: add variational circuit for the search problem"
-
-# 4. Push the branch
-git push -u origin feature/my-task
-
-# 5. Open a Pull Request on GitHub and request a review
-#    https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-tech-titans-0011/compare/main...feature/my-task
-
-# 6. After approval, merge into main
-git checkout main
-git pull origin main
-git branch -d feature/my-task
-```
-
-### Commit message convention
-
-| Prefix | Meaning |
-| :--- | :--- |
-| `feat:` | New feature |
-| `fix:` | Bug fix |
-| `docs:` | Documentation only |
-| `test:` | Adding or fixing tests |
-| `refactor:` | Code restructure, no behaviour change |
-| `chore:` | Build/config/dependency changes |
-
-### Useful commands
-
-```bash
-git status              # what changed
-git log --oneline -10   # recent commits
-git diff                # review changes before committing
-git stash               # shelve changes temporarily
-git pull --rebase       # update your branch on top of main
-```
-
-### Collaborating on the same repo
-
-- **Never push directly to `main`** — open a Pull Request.
-- **Pull before you push** to avoid rejected commits.
-- **Commit often** with clear messages.
-- **Resolve conflicts** locally: `git pull --rebase`, fix the files, then `git add` + `git rebase --continue`.
-- **Ask for a review** before merging — a second pair of eyes catches bugs fast.
+- `GET /` — Main single-page application.
+- `GET /api/buildings` — List all facility profiles.
+- `POST /api/buildings` — Create a new facility profile.
+- `PUT /api/building/<id>` — Update tariffs and emissions factors.
+- `GET /api/summary/<id>` — Aggregate metrics, diurnal charts, and recommendations.
+- `GET /api/equipment/<id>` — List equipment inventory.
+- `POST /api/equipment` — Add new equipment item.
+- `DELETE /api/equipment/<id>` — Delete equipment item.
+- `POST /api/upload-csv/<id>` — Ingest and validate hourly CSV energy logs.
+- `GET /api/sample-csv` — Download sample CSV format.
+- `GET /api/predict/<id>` — Train and evaluate Scikit-Learn AI demand forecast.
+- `GET /api/recommendations/<id>` — Generate actionable energy-saving recommendations.
+- `GET /api/optimize/<id>` — Run classical 24-hour constrained load-shifting scheduler.
+- `POST /api/quantum-run` — Run Qiskit QAOA simulation with configurable qubits and layers.
+- `GET /api/report/csv/<id>` — Download comprehensive CSV energy audit report.
+- `GET /api/report/pdf/<id>` — Download official PDF audit document.
 
 ---
 
-## ✅ Submission Checklist
+## 🌿 Environmental Impact Methodology
 
-- [ ] Repository created and **public**
-- [ ] All team members added as **collaborators** and invitations accepted
-- [ ] `README.md` updated with project details, problem statement and solution
-- [ ] Team members listed under [Team Members](#-team-members-github-ids)
-- [ ] `requirements.txt` committed and project runs from a clean clone
-- [ ] Code pushed to `main` and the latest `main` builds successfully
-- [ ] Notebooks committed with **cleared outputs** (or use `nbstrip`)
-- [ ] `README` includes a demo screenshot / video link
-- [ ] Short project summary submitted on the hackathon portal
+1. **Carbon Accounting**:
+   $$\text{Emissions } (\text{kg CO}_2\text{e}) = \text{Consumption } (\text{kWh}) \times \text{Emission Factor } (\text{kg CO}_2\text{e/kWh})$$
+2. **Peaker Plant Avoidance**:
+   Marginal grid emission factor during peak hours (18:00 - 22:00) is modeled at ~0.95 kg CO₂e/kWh due to inefficient thermal peaker plants. Off-peak energy draws cleaner base-load power (~0.76 kg CO₂e/kWh).
+3. **Tree Sequestration Equivalent**:
+   One mature urban tree absorbs approximately 21.77 kg of CO₂ per year (IPCC standard).
+   $$\text{Trees Equivalent} = \frac{\text{Annual Carbon Saved (kg)}}{21.77}$$
 
 ---
 
-## 📚 Resources
-
-| Resource | Link |
-| :--- | :--- |
-| 🔁 Git & collaboration handbook | [Git & Collaboration Handbook](../vtu-hc-guide-git-and-collaboration) |
-| ❓ Problem statements, solutions & terms | [Problem Statements, Solutions & Terms](../vtu-hc-guide-problem-and-solution) |
-| 📄 README writing guide | [README Guide & Template](../vtu-hc-guide-readme-template) |
-| ⚛️ Qiskit documentation | https://docs.quantum.ibm.com/ |
-| ⚛️ Qiskit Runtime & primitives | https://quantum.cloud.ibm.com/docs/ |
-| 🧪 Qiskit Aer simulator | https://docs.quantum.ibm.com/guides/simulator |
-| 💻 IBM Quantum Platform | https://quantum.cloud.ibm.com/ |
-| 🎓 Qiskit textbook | https://qiskit.qotlabs.org/learning/ |
-| 📋 GitHub Docs | https://docs.github.com/ |
-
----
-
-## 📄 License
-
-Released under the [MIT License](LICENSE). See `LICENSE` for details.
-
----
-
-<div align="center">
-
-**Tech Titans** · Team ID `VTU-QFF-HC-0011` · Tier `Online`
-· Built with ⚛️ Qiskit for the VTU-QFF Hackathon
-
-[⬆ Back to Top](#tech-titans)
-
-</div>
+## 🏆 Hackathon Presentation Highlights
+- **Live Interactive Demo**: Switch seamlessly between colleges, hostels, research labs, and office complexes.
+- **Genuine AI & Quantum Implementation**: Real Scikit-learn regressors ($R^2 > 0.95$) and real Qiskit QAOA quantum circuits (no fake hardcoded numbers).
+- **Professional PDF/CSV Export**: Ready to present to institutional facility managers and hackathon judges.
